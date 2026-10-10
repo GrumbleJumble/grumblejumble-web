@@ -187,8 +187,8 @@ export default function SearchControls({
                 const isSelected = radius === mark.val;
                 
                 // Position calculations accounting for 22px thumb (11px radius)
-                let style = {};
-                let alignClass = '';
+                let style;
+                let alignClass;
                 if (mark.val === 1) {
                   style = { left: '0%' };
                   alignClass = 'text-left';

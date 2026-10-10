@@ -63,6 +63,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
       <head>
+        <title>GrumbleJumble — Can't Decide What to Eat or Drink?</title>
         <link rel="preload" href="/fonts/ClarityCity-Regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/ClarityCity-Bold.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/PlaywriteAR-Regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
@@ -71,7 +72,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-[100dvh] flex flex-col bg-[#0b131b] text-slate-100 antialiased selection:bg-brand-secondary selection:text-slate-900 overflow-x-hidden">
+      <body className="min-h-dvh flex flex-col bg-[#0b131b] text-slate-100 antialiased selection:bg-brand-secondary selection:text-slate-900 overflow-x-hidden">
         <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col min-h-0">
           {children}
         </main>

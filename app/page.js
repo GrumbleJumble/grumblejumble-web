@@ -205,7 +205,7 @@ export default function Home() {
   const currentPlace = placesPool[currentIndex] || null;
 
   return (
-    <div className={`w-full flex flex-col ${viewState === 'search' ? 'h-[100dvh] max-h-[100dvh] justify-between overflow-hidden' : 'min-h-[100dvh] justify-between'}`}>
+    <div className={`w-full flex flex-col ${viewState === 'search' ? 'h-dvh max-h-dvh justify-between overflow-hidden' : 'min-h-dvh justify-between'}`}>
       
       {/* Navigation: Top 10dvh */}
       <Navbar
@@ -213,7 +213,7 @@ export default function Home() {
         isDetectingLocation={isDetectingLocation}
         onRequestGps={handleRequestGps}
         onOpenLocationModal={() => setIsLocationModalOpen(true)}
-        className={viewState === 'search' ? 'h-[10dvh] min-h-[56px] flex items-center flex-shrink-0' : 'min-h-[10dvh] flex items-center py-2 sm:py-3 flex-shrink-0'}
+        className={viewState === 'search' ? 'h-[10dvh] min-h-14 flex items-center shrink-0' : 'min-h-[10dvh] flex items-center py-2 sm:py-3 shrink-0'}
       />
 
       {/* Main Content Area: Middle auto-centered in remaining space */}
@@ -280,7 +280,7 @@ export default function Home() {
       />
 
       {/* Footer: Bottom 5dvh */}
-      <Footer className={viewState === 'search' ? 'h-[5dvh] min-h-[36px] flex items-center flex-shrink-0' : 'min-h-[5dvh] flex items-center mt-auto py-3 flex-shrink-0'} />
+      <Footer className={viewState === 'search' ? 'h-[5dvh] min-h-9 flex items-center shrink-0' : 'min-h-[5dvh] flex items-center mt-auto py-3 shrink-0'} />
 
     </div>
   );
