@@ -40,8 +40,8 @@ export default function SearchControls({
     <div className="w-full flex flex-col items-center">
       
       {/* Hero Headline */}
-      <div className="text-center mb-3 sm:mb-4 w-full max-w-3xl px-2">
-        <h1 className="text-[clamp(1.3rem,4.5vw,2.75rem)] font-black text-white tracking-tight mb-1 whitespace-nowrap">
+      <div className="text-center mb-6 sm:mb-4 w-full max-w-3xl px-2">
+        <h1 className="text-[clamp(1.18rem,4.8vw,2.75rem)] font-black text-white tracking-tight mb-1 whitespace-nowrap">
           Can't{' '}
           <span className="inline-block bg-gradient-to-r from-brand-accent1 to-brand-accent2 bg-clip-text text-transparent font-['Playwrite_AR'] font-normal pr-2 pl-1 -mr-1 py-0.5">
             decide
@@ -54,10 +54,10 @@ export default function SearchControls({
       </div>
 
       {/* Main Glass Configuration Card */}
-      <div className="w-full max-w-2xl glass-panel rounded-2xl sm:rounded-3xl p-4.5 sm:p-6 shadow-2xl space-y-3.5 sm:space-y-4.5 transition-all duration-300">
+      <div className="w-full max-w-2xl glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl space-y-5 sm:space-y-5.5 transition-all duration-300">
         
         {/* 1. Mode Selector: Hungry vs Thirsty */}
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">
             How are you feeling?
           </label>
@@ -90,13 +90,13 @@ export default function SearchControls({
           </div>
         </div>
 
-        {/* 2. Party Size Selector */}
-        <div className="space-y-1.5">
+        {/* 2. Party Size Selector: 1 column on mobile, 4 columns on desktop */}
+        <div className="space-y-2">
           <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">
             {mode === 'thirsty' ? "Who's thirsty?" : "Who's hungry?"}
           </label>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 sm:gap-2.5">
             {GROUP_SIZES.map((group) => {
               const isSelected = groupSize === group.id;
               return (
@@ -104,16 +104,16 @@ export default function SearchControls({
                   key={group.id}
                   type="button"
                   onClick={() => setGroupSize(group.id)}
-                  className={`flex flex-col items-start p-2.5 sm:p-3 rounded-xl border text-left transition-all duration-200 ${
+                  className={`flex flex-row sm:flex-col items-center sm:items-start justify-between sm:justify-start px-3.5 py-2.5 sm:p-3 rounded-xl border text-left transition-all duration-200 ${
                     isSelected
                       ? 'border-brand-secondary bg-brand-primary/20 text-white shadow-sm'
                       : 'border-slate-800/80 bg-slate-900/60 text-slate-400 hover:text-slate-200 hover:border-slate-700'
                   }`}
                 >
-                  <span className={`text-xs sm:text-sm font-bold ${isSelected ? 'text-brand-secondary' : 'text-slate-200'}`}>
+                  <span className={`text-sm font-bold ${isSelected ? 'text-brand-secondary' : 'text-slate-200'}`}>
                     {group.label}
                   </span>
-                  <span className="text-[11px] text-slate-400 mt-0.5 leading-snug">
+                  <span className="text-xs text-slate-400 sm:mt-0.5 leading-snug">
                     {group.sub}
                   </span>
                 </button>
@@ -123,7 +123,7 @@ export default function SearchControls({
         </div>
 
         {/* 3. Category / Cuisine Dropdown */}
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           <label htmlFor="craving-select" className="text-xs font-semibold uppercase tracking-wider text-slate-400">
             Got a craving?
           </label>
@@ -147,12 +147,13 @@ export default function SearchControls({
         </div>
 
         {/* 4. Distance / Radius Slider */}
-        <div className="space-y-1.5 sm:space-y-2 pt-0.5">
+        <div className="space-y-2.5 pt-0.5">
           <div className="flex items-center justify-between">
             <label htmlFor="radius-slider" className="text-xs font-semibold uppercase tracking-wider text-slate-400">
               How far do you want to drive?
             </label>
-            <div className="flex items-center gap-2">
+            {/* Drive time estimate and Mileage pill hidden on mobile */}
+            <div className="hidden sm:flex items-center gap-2">
               <span className="text-xs text-slate-400">
                 {getDriveTimeEstimate(radius)}
               </span>
@@ -175,7 +176,7 @@ export default function SearchControls({
             />
 
             {/* Mathematically aligned distance milestone labels */}
-            <div className="relative w-full h-4 mt-1.5 text-[11px] text-slate-400 font-medium">
+            <div className="relative w-full h-4 mt-1.5 text-[10px] sm:text-[11px] text-slate-400 font-medium">
               {[
                 { val: 1, label: '1 mile' },
                 { val: 5, label: '5 miles' },
@@ -221,12 +222,12 @@ export default function SearchControls({
         </div>
 
         {/* 5. Big Jumble CTA Button */}
-        <div className="pt-1 sm:pt-1.5">
+        <div className="pt-2 sm:pt-1.5">
           <button
             type="button"
             onClick={onJumble}
             disabled={isLoading}
-            className={`w-full py-3 sm:py-3.5 px-6 rounded-xl sm:rounded-2xl font-black text-base sm:text-lg tracking-wide uppercase transition-all duration-300 flex items-center justify-center gap-2.5 shadow-xl ${
+            className={`w-full py-3.5 px-6 rounded-xl sm:rounded-2xl font-black text-base sm:text-lg tracking-wide uppercase transition-all duration-300 flex items-center justify-center gap-2.5 shadow-xl ${
               isLoading
                 ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'
                 : 'bg-gradient-to-r from-brand-accent1 via-[#f3834f] to-brand-accent2 text-slate-950 hover:brightness-110 hover:shadow-brand-accent1/25 hover:scale-[1.01] active:scale-[0.99] cursor-pointer'

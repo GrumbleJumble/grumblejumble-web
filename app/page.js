@@ -205,19 +205,19 @@ export default function Home() {
   const currentPlace = placesPool[currentIndex] || null;
 
   return (
-    <div className={`w-full flex flex-col ${viewState === 'search' ? 'h-dvh max-h-dvh justify-between overflow-hidden' : 'min-h-dvh justify-between'}`}>
+    <div className={`w-full flex flex-col ${viewState === 'search' ? 'min-h-dvh sm:h-dvh sm:max-h-dvh justify-between sm:overflow-hidden' : 'min-h-dvh justify-between'}`}>
       
-      {/* Navigation: Top 10dvh */}
+      {/* Navigation: Top (10dvh on desktop, natural on mobile) */}
       <Navbar
         locationLabel={locationLabel}
         isDetectingLocation={isDetectingLocation}
         onRequestGps={handleRequestGps}
         onOpenLocationModal={() => setIsLocationModalOpen(true)}
-        className={viewState === 'search' ? 'h-[10dvh] min-h-14 flex items-center shrink-0' : 'min-h-[10dvh] flex items-center py-2 sm:py-3 shrink-0'}
+        className={viewState === 'search' ? 'py-2 sm:py-0 sm:h-[13dvh] sm:min-h-20 flex items-center shrink-0' : 'py-3 sm:py-0 sm:min-h-[13dvh] flex items-center shrink-0'}
       />
 
-      {/* Main Content Area: Middle auto-centered in remaining space */}
-      <div className={`w-full flex flex-col items-center justify-center ${viewState === 'search' ? 'flex-1 min-h-0 overflow-y-auto py-2' : 'flex-1 py-4 sm:py-6'}`}>
+      {/* Main Content Area: Auto-centered on desktop, clean breathing room on mobile */}
+      <div className={`w-full flex flex-col items-center justify-center ${viewState === 'search' ? 'flex-1 py-3 sm:py-2 sm:min-h-0 sm:overflow-y-auto' : 'flex-1 py-4 sm:py-6'}`}>
         
         {apiError && (
           <div className="w-full max-w-2xl mb-4 p-3 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-sm flex items-center justify-between">
@@ -279,8 +279,8 @@ export default function Home() {
         guessedLocationLabel={locationLabel}
       />
 
-      {/* Footer: Bottom 5dvh */}
-      <Footer className={viewState === 'search' ? 'h-[5dvh] min-h-9 flex items-center shrink-0' : 'min-h-[5dvh] flex items-center mt-auto py-3 shrink-0'} />
+      {/* Footer: Bottom (5dvh on desktop, natural on mobile) */}
+      <Footer className={viewState === 'search' ? 'py-3 sm:py-0 sm:h-[5dvh] sm:min-h-9 flex items-center shrink-0' : 'py-3 sm:py-0 sm:min-h-[5dvh] flex items-center mt-auto shrink-0'} />
 
     </div>
   );

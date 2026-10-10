@@ -19,11 +19,11 @@ function GithubIcon({ className = "w-4 h-4" }) {
 
 export default function Footer({ className = "" }) {
   return (
-    <footer className={`w-full border-t border-slate-800/60 ${className || 'h-[5dvh] min-h-[36px] flex items-center'}`}>
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs text-slate-400">
+    <footer className={`w-full border-t border-slate-800/60 ${className || 'py-3 sm:py-0 sm:h-[5dvh] sm:min-h-9 flex items-center'}`}>
+      <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-1.5 sm:gap-4 text-xs text-slate-400 text-center sm:text-left">
         
         {/* Creator Credits */}
-        <div className="flex items-center flex-wrap justify-center sm:justify-start text-xs text-slate-400">
+        <div className="flex items-center flex-wrap justify-center sm:justify-start text-[11px] sm:text-xs text-slate-400">
           <span>Originally created with</span>
           <Heart className="w-3.5 h-3.5 text-brand-accent1 fill-brand-accent1 inline animate-pulse mx-1.5" />
           <span>
@@ -51,18 +51,18 @@ export default function Footer({ className = "" }) {
         </div>
 
         {/* Links & Attributions */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center justify-center gap-3 sm:gap-4 text-[11px] sm:text-xs">
           <span className="text-slate-400">
             Powered by Foursquare Places
           </span>
-          <span className="text-slate-400">•</span>
+          <span className="text-slate-500">•</span>
           <a
             href="https://github.com/GrumbleJumble/GrumbleJumble"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors"
           >
-            <GithubIcon className="w-4 h-4" />
+            <GithubIcon className="w-3.5 h-3.5" />
             <span>GitHub</span>
           </a>
         </div>
