@@ -8,6 +8,7 @@ import SearchControls from '@/components/SearchControls';
 import MainResult from '@/components/MainResult';
 import SecondaryResults from '@/components/SecondaryResults';
 import LocationModal from '@/components/LocationModal';
+import LocationPromptModal from '@/components/LocationPromptModal';
 
 export default function Home() {
   // Search parameters
@@ -21,6 +22,8 @@ export default function Home() {
   const [locationLabel, setLocationLabel] = useState('Detecting location...');
   const [isDetectingLocation, setIsDetectingLocation] = useState(true);
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+  const [isExactGps, setIsExactGps] = useState(false);
+  const [isLocationPromptOpen, setIsLocationPromptOpen] = useState(false);
 
   // Results & Pool state
   const [viewState, setViewState] = useState('search'); // 'search' | 'result'
@@ -69,6 +72,7 @@ export default function Home() {
         const lng = position.coords.longitude;
         setCoords({ lat, lng });
         setLocationLabel('Exact GPS Location');
+        setIsExactGps(true);
         setIsDetectingLocation(false);
       },
       (err) => {
@@ -84,6 +88,7 @@ export default function Home() {
   const handleLocationSelected = ({ lat, lng, label }) => {
     setCoords({ lat, lng });
     setLocationLabel(label);
+    setIsExactGps(true);
   };
 
   // 4. Fire celebration confetti
@@ -100,15 +105,15 @@ export default function Home() {
     }
   };
 
-  // 5. Jumble Action (Fetch batch of 5-10 places from Serverless API)
-  const handleJumble = async () => {
+  // 5. Core Jumble Execution (Fetch batch of places from Serverless API)
+  const executeJumble = async (targetCoords = coords) => {
     setIsLoading(true);
     setApiError(null);
 
     try {
       const payload = {
-        lat: coords.lat,
-        lng: coords.lng,
+        lat: targetCoords?.lat || coords.lat,
+        lng: targetCoords?.lng || coords.lng,
         radius,
         mode,
         category,
@@ -140,22 +145,58 @@ export default function Home() {
     }
   };
 
-  // 6. Next Result Action (Spin next spot in the local session pool - Zero API calls!)
-  const handleNextResult = () => {
-    if (placesPool.length === 0) return;
-    const nextIdx = (currentIndex + 1) % placesPool.length;
-    setCurrentIndex(nextIdx);
-    triggerConfetti();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  // 6. User clicks Jumble button: check if precise location needed
+  const handleJumbleClick = () => {
+    if (isExactGps) {
+      executeJumble(coords);
+    } else {
+      setIsLocationPromptOpen(true);
+    }
   };
 
-  // 7. Select specific place from secondary list
+  // 7. Accept GPS from prompt modal
+  const handleAcceptGpsAndJumble = () => {
+    setIsLocationPromptOpen(false);
+    if (!navigator.geolocation) {
+      executeJumble(coords);
+      return;
+    }
+
+    setIsDetectingLocation(true);
+    setIsLoading(true);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        const newCoords = { lat, lng };
+        setCoords(newCoords);
+        setLocationLabel('Exact GPS Location');
+        setIsExactGps(true);
+        setIsDetectingLocation(false);
+        executeJumble(newCoords);
+      },
+      (err) => {
+        console.warn('GPS request failed or denied:', err);
+        setIsDetectingLocation(false);
+        executeJumble(coords);
+      },
+      { timeout: 8000, enableHighAccuracy: true }
+    );
+  };
+
+  // 8. Decline GPS and proceed with guessed location
+  const handleDeclineGpsAndJumble = () => {
+    setIsLocationPromptOpen(false);
+    executeJumble(coords);
+  };
+
+  // 9. Select specific place from secondary list
   const handleSelectSpecificPlace = (idx) => {
     setCurrentIndex(idx);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // 8. Return to search filters
+  // 10. Return to search filters
   const handleResetSearch = () => {
     setViewState('search');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -164,21 +205,22 @@ export default function Home() {
   const currentPlace = placesPool[currentIndex] || null;
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className={`w-full flex flex-col ${viewState === 'search' ? 'h-[100dvh] max-h-[100dvh] justify-between overflow-hidden' : 'min-h-[100dvh] justify-between'}`}>
       
-      {/* Navigation */}
+      {/* Navigation: Top 10dvh */}
       <Navbar
         locationLabel={locationLabel}
         isDetectingLocation={isDetectingLocation}
         onRequestGps={handleRequestGps}
         onOpenLocationModal={() => setIsLocationModalOpen(true)}
+        className={viewState === 'search' ? 'h-[10dvh] min-h-[56px] flex items-center flex-shrink-0' : 'min-h-[10dvh] flex items-center py-2 sm:py-3 flex-shrink-0'}
       />
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col items-center justify-center w-full">
+      {/* Main Content Area: Middle auto-centered in remaining space */}
+      <div className={`w-full flex flex-col items-center justify-center ${viewState === 'search' ? 'flex-1 min-h-0 overflow-y-auto py-2' : 'flex-1 py-4 sm:py-6'}`}>
         
         {apiError && (
-          <div className="w-full max-w-2xl mb-6 p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-sm flex items-center justify-between">
+          <div className="w-full max-w-2xl mb-4 p-3 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-sm flex items-center justify-between">
             <span>{apiError}</span>
             <button
               onClick={() => setApiError(null)}
@@ -199,18 +241,14 @@ export default function Home() {
             setCategory={setCategory}
             groupSize={groupSize}
             setGroupSize={setGroupSize}
-            onJumble={handleJumble}
+            onJumble={handleJumbleClick}
             isLoading={isLoading}
           />
         ) : (
           <div className="w-full flex flex-col items-center">
             <MainResult
               business={currentPlace}
-              currentIndex={currentIndex}
-              totalInBatch={placesPool.length}
-              onNextResult={handleNextResult}
               onResetSearch={handleResetSearch}
-              groupSize={groupSize}
             />
 
             <SecondaryResults
@@ -232,8 +270,17 @@ export default function Home() {
         currentLocationLabel={locationLabel}
       />
 
-      {/* Footer */}
-      <Footer />
+      {/* Precise Location Prompt Modal */}
+      <LocationPromptModal
+        isOpen={isLocationPromptOpen}
+        onClose={() => setIsLocationPromptOpen(false)}
+        onAcceptGps={handleAcceptGpsAndJumble}
+        onDeclineGps={handleDeclineGpsAndJumble}
+        guessedLocationLabel={locationLabel}
+      />
+
+      {/* Footer: Bottom 5dvh */}
+      <Footer className={viewState === 'search' ? 'h-[5dvh] min-h-[36px] flex items-center flex-shrink-0' : 'min-h-[5dvh] flex items-center mt-auto py-3 flex-shrink-0'} />
 
     </div>
   );

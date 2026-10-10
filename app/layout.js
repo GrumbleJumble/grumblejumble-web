@@ -2,8 +2,8 @@ import './globals.css';
 
 export const metadata = {
   metadataBase: new URL('https://grumblejumble.com'),
-  title: 'GrumbleJumble — Can\'t Decide What to Eat or Drink?',
-  description: 'GrumbleJumble takes the stress out of group indecision. Pick whether you are hungry or thirsty, set your distance and party size, and let us pick the perfect spot for you.',
+  title: 'GrumbleJumble | Less Thinking. More Eating.',
+  description: 'Can\'t settle on a restaurant? Let us pick for you!',
   keywords: ['restaurant picker', 'random restaurant', 'food decision maker', 'where to eat', 'boba', 'coffee', 'group dining'],
   authors: [{ name: 'Ivan Huang' }, { name: 'Roy Jou' }],
   creator: 'GrumbleJumble',
@@ -13,8 +13,8 @@ export const metadata = {
     locale: 'en_US',
     url: 'https://grumblejumble.com',
     siteName: 'GrumbleJumble',
-    title: 'GrumbleJumble — Pick Where to Eat or Drink Instantly',
-    description: 'Solve meal indecision in one click. Tailored to your location, radius, and party size.',
+    title: 'GrumbleJumble | Less Thinking. More Eating.',
+    description: 'Can\'t settle on a restaurant? Let us pick for you!',
     images: [
       {
         url: '/logo.png',
@@ -26,8 +26,8 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'GrumbleJumble — Can\'t Decide What to Eat or Drink?',
-    description: 'Solve food indecisiveness instantly. Set your radius and group size, and let us pick!',
+    title: 'GrumbleJumble | Less Thinking. More Eating.',
+    description: 'Can\'t settle on a restaurant? Let us pick for you!',
     images: ['/logo.png'],
   },
   icons: {
@@ -50,7 +50,7 @@ export default function RootLayout({ children }) {
     '@type': 'WebApplication',
     name: 'GrumbleJumble',
     url: 'https://grumblejumble.com',
-    description: 'A modern, minimalistic tool to solve dining and beverage indecisiveness.',
+    description: 'Can\'t settle on a restaurant? Let us pick for you!1',
     applicationCategory: 'Food & Drink',
     operatingSystem: 'All',
     offers: {
@@ -71,8 +71,8 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-[#0b131b] text-slate-100 antialiased selection:bg-brand-secondary selection:text-slate-900">
-        <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 flex flex-col">
+      <body className="min-h-[100dvh] flex flex-col bg-[#0b131b] text-slate-100 antialiased selection:bg-brand-secondary selection:text-slate-900 overflow-x-hidden">
+        <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col min-h-0">
           {children}
         </main>
       </body>

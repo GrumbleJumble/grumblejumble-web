@@ -1,8 +1,38 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-brand-primary: #3a7b8f;
+  --color-brand-secondary: #5bc0de;
+  --color-brand-accent1: #ed6c4f;
+  --color-brand-accent2: #ffbd4f;
+  --color-brand-dark: #1e293b;
+  --color-brand-light: #f8fafc;
+
+  --font-sans: 'Clarity City', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-stylistic: 'Playwrite AR', cursive, sans-serif;
+
+  --background-image-brand-gradient-1: linear-gradient(135deg, #3a7b8f 0%, #5bc0de 100%);
+  --background-image-brand-gradient-2: linear-gradient(135deg, #ed6c4f 0%, #ffbd4f 100%);
+  --background-image-brand-hero: radial-gradient(ellipse at top, rgba(91, 192, 222, 0.15) 0%, rgba(58, 123, 143, 0.05) 50%, rgba(15, 23, 42, 0) 100%);
+
+  --animate-spin-slow: spin 8s linear infinite;
+  --animate-bounce-subtle: bounceSubtle 2s ease-in-out infinite;
+  --animate-fade-in: fadeIn 0.35s ease-out forwards;
+}
+
+@keyframes bounceSubtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
 
 /* Self-hosted Clarity City Fonts */
+/* noinspection CssUnknownTarget */
 @font-face {
   font-family: 'Clarity City';
   src: url('/fonts/ClarityCity-Regular.woff2') format('woff2');
@@ -11,6 +41,7 @@
   font-display: swap;
 }
 
+/* noinspection CssUnknownTarget */
 @font-face {
   font-family: 'Clarity City';
   src: url('/fonts/ClarityCity-Medium.woff2') format('woff2');
@@ -19,6 +50,7 @@
   font-display: swap;
 }
 
+/* noinspection CssUnknownTarget */
 @font-face {
   font-family: 'Clarity City';
   src: url('/fonts/ClarityCity-SemiBold.woff2') format('woff2');
@@ -27,6 +59,7 @@
   font-display: swap;
 }
 
+/* noinspection CssUnknownTarget */
 @font-face {
   font-family: 'Clarity City';
   src: url('/fonts/ClarityCity-Bold.woff2') format('woff2');
@@ -35,6 +68,7 @@
   font-display: swap;
 }
 
+/* noinspection CssUnknownTarget */
 @font-face {
   font-family: 'Clarity City';
   src: url('/fonts/ClarityCity-ExtraBold.woff2') format('woff2');
@@ -44,6 +78,7 @@
 }
 
 /* Self-hosted Playwrite Argentina (Playwrite AR) */
+/* noinspection CssUnknownTarget */
 @font-face {
   font-family: 'Playwrite AR';
   src: url('/fonts/PlaywriteAR-Regular.woff2') format('woff2');
@@ -52,6 +87,7 @@
   font-display: swap;
 }
 
+/* noinspection CssUnknownTarget */
 @font-face {
   font-family: 'Playwrite AR';
   src: url('/fonts/PlaywriteAR-Light.woff2') format('woff2');

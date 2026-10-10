@@ -2,16 +2,16 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { MapPin, Navigation, Sparkles } from 'lucide-react';
+import { MapPin, Navigation } from 'lucide-react';
 
-export default function Navbar({ locationLabel, isDetectingLocation, onRequestGps, onOpenLocationModal }) {
+export default function Navbar({ locationLabel, isDetectingLocation, onRequestGps, onOpenLocationModal, className = "" }) {
   return (
-    <header className="w-full mb-8 pt-2">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-3 px-5 rounded-2xl glass-panel shadow-lg shadow-black/20">
+    <header className={`w-full ${className || 'h-[10dvh] min-h-[56px] flex items-center'}`}>
+      <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-3 py-2 px-4 sm:px-5 rounded-2xl glass-panel shadow-lg shadow-black/20">
         
         {/* Brand / Logo */}
         <div className="flex items-center gap-3.5 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          <div className="relative w-11 h-11 flex-shrink-0 transition-transform duration-300 group-hover:scale-105">
+          <div className="relative w-10 h-10 flex-shrink-0 transition-transform duration-300 group-hover:scale-105">
             <Image
               src="/logo.svg"
               alt="GrumbleJumble"
@@ -21,14 +21,14 @@ export default function Navbar({ locationLabel, isDetectingLocation, onRequestGp
             />
           </div>
           <div className="flex flex-col">
-            <div className="flex items-center gap-1.5">
-              <span className="text-2xl font-bold tracking-tight text-white">Grumble</span>
-              <span className="text-2xl font-bold tracking-tight bg-gradient-to-r from-brand-accent1 to-brand-accent2 bg-clip-text text-transparent">
+            <div className="flex items-center">
+              <span className="text-xl sm:text-2xl font-bold tracking-tight text-white">Grumble</span>
+              <span className="text-xl sm:text-2xl font-bold tracking-tight bg-gradient-to-r from-brand-accent1 to-brand-accent2 bg-clip-text text-transparent">
                 Jumble
               </span>
             </div>
             <span className="text-xs text-slate-400 font-medium tracking-wide">
-              The cure for meal indecision
+              Less Thinking. More Eating.
             </span>
           </div>
         </div>

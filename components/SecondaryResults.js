@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Star, Navigation, ArrowRight } from 'lucide-react';
+import { ChevronDown, ChevronUp, Star, ArrowRight } from 'lucide-react';
 
 export default function SecondaryResults({ places, activeIndex, onSelectPlace }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +10,8 @@ export default function SecondaryResults({ places, activeIndex, onSelectPlace })
 
   const otherPlaces = places
     .map((place, idx) => ({ ...place, originalIdx: idx }))
-    .filter(p => p.originalIdx !== activeIndex);
+    .filter(p => p.originalIdx !== activeIndex)
+    .slice(0, 8);
 
   return (
     <div className="w-full max-w-2xl mt-6">
@@ -19,13 +20,13 @@ export default function SecondaryResults({ places, activeIndex, onSelectPlace })
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full py-3 px-5 rounded-2xl glass-panel border border-slate-800 hover:border-slate-700 flex items-center justify-between text-xs font-semibold text-slate-300 hover:text-white transition-all shadow-md"
+        className="w-full py-3.5 px-5 rounded-2xl glass-panel border border-slate-800 hover:border-slate-700 flex items-center justify-between text-xs font-semibold text-slate-300 hover:text-white transition-all shadow-md group cursor-pointer"
       >
-        <span>
-          Peek other {otherPlaces.length} options in this batch
+        <span className="font-bold tracking-wide">
+          Show More Options
         </span>
-        <div className="flex items-center gap-1.5 text-brand-secondary">
-          <span>{isOpen ? 'Hide' : 'Show All'}</span>
+        <div className="flex items-center gap-1.5 text-brand-secondary font-semibold">
+          <span>{isOpen ? 'Hide' : 'View (8)'}</span>
           {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
         </div>
       </button>

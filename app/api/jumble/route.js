@@ -73,8 +73,8 @@ async function handleRequest(request) {
     // Apply the group size filtering and scoring algorithm
     const filteredVenues = filterVenuesByGroupSize(rawVenues, groupSize);
 
-    // Limit to top 8-10 candidates for the client-side session pool
-    const selectedPool = filteredVenues.slice(0, 10);
+    // Limit to top 9 candidates (1 decisive pick + 8 in secondary options)
+    const selectedPool = filteredVenues.slice(0, 9);
 
     return NextResponse.json({
       success: true,
