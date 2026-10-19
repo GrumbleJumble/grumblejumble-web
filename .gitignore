@@ -33,5 +33,7 @@ yarn-error.log*
 .vercel
 
 config.json
-
 api.json
+
+# IDE
+.idea/

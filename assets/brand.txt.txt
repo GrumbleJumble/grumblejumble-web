@@ -1,0 +1,13 @@
+Grumble Jumble
+
+Primary Color: #3a7b8f
+Secondary Color: #5bc0de
+Acent 1: #ed6c4f
+Accent 2: #ffbd4f
+
+Gradient 1: #3a7b8f > #5bc0de
+Gradient 2: #ed6c4f > #ffbd4f
+
+Fonts:
+Stylistic: Playwrite Argentina
+Primary: Clarity City
